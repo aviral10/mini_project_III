@@ -9,6 +9,9 @@ var s1 = function( f ) {
     f.fill(0);
     f.circle(f.mouseX, f.mouseY, 30);
   }
+  reset = function(){
+    f.background(240);
+  }
 };
 new p5(s1);
 
@@ -21,7 +24,7 @@ class Particle{
         this.vel = p5.Vector.random2D();
         this.acc = p.createVector();
         this.r = 8;
-        this.maxspeed = 10;
+        this.maxspeed = 5;
         this.maxforce = 1;
         this.col = {
             r: p.random(150,255),
@@ -101,13 +104,13 @@ p.preload = function (){
 let input;
 let particles = []
 p.setup = function () {
-    let canv = p.createCanvas(400,400);
+    let canv = p.createCanvas(600,300);
     canv.position(100,50)
     p.background(255);
     input = p.createInput();
     input.position(425,25);
     input.changed(newText);
-    let points = font.textToPoints('UwU', p.width/4-100, p.height/2+100,100);
+    let points = font.textToPoints('o.O', p.width/2, p.height/2,100);
     
     for(let i=0;i<points.length;i++){
         let pt = points[i];
@@ -123,7 +126,7 @@ newText = function (){
 let arr;
 change = function (text){
     arr = []
-    let points = font.textToPoints(text, p.width/4-100, p.height/2+100,150);
+    let points = font.textToPoints(text, p.width/2, p.height/2,150);
 
     for(let i=0;i<points.length;i++){
         let pX;

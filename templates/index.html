@@ -9,11 +9,19 @@ Home Page
 
 {% block content %}
 <div>
-    <button onclick="save_img()">Save</button>
+    <button id="save_butt" onclick="save_img()">Save</button>
+    <button onclick="clear_canvas()">Clear</button>
 </div>
+
+
 <script>
+    function clear_canvas(){
+        reset();
+    };
+
     function save_img(){
         let canvas = document.getElementById("defaultCanvas0")
+        document.getElementById("save_butt").disabled = true;
         let dataURL = canvas.toDataURL("image/png");
         dataURL = dataURL.replace(/^data:image\/(png|jpg);base64,/, "");
 
@@ -41,6 +49,7 @@ Home Page
             // Should be 'OK' if everything was successful
             change(text)
             console.log("Done");
+            document.getElementById("save_butt").disabled = false;
         });
     }
 </script>

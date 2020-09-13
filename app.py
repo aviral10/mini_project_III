@@ -2,6 +2,12 @@ import os
 from flask import Flask, request, redirect, url_for, render_template, jsonify
 import base64
 import time
+###
+from tensorflow.keras.models import load_model
+import numpy as np
+from skimage import data, color, io
+from skimage.transform import rescale, resize
+###
 
 UPLOAD_FOLDER = f'{os.getcwd()}/uploads'
 
@@ -26,8 +32,29 @@ def create_entry():
         s = base64.decodebytes(req['data'].encode('utf-8'))
         with open("image.png", "wb") as w:
             w.write(s)
-        time.sleep(5)
-        return 'WoW'
+
+        #####
+        ret_val = str("NOPE")
+
+        image = io.imread('image.png')
+        image = color.rgb2gray(image)
+        image_resized = resize(image, (28, 28, 1))
+
+        final = ((1 - np.array(image_resized)))
+
+        # plt.imshow(final, cmap='gray')
+        # plt.savefig('books_read.png')
+        final = np.expand_dims(final, axis=0)
+        print(final.shape)
+
+        model = load_model("models/mnist_trained_99.h5")
+        answer = model.predict(final)
+        ret_val = answer.argmax()
+        print(ret_val)
+        print("NoT Sleeping")
+        # time.sleep(2)
+        #####
+        return str(ret_val)
     else:
         message = {'message':'Had some error'}
         return jsonify(message)

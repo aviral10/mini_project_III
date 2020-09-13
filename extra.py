@@ -7,7 +7,4 @@
 #         w.write(s)
 
 # print("Done")
-import requests
-url = "http://127.0.0.1:5500/"
-with requests.get(url) as r:
-    print(r.text)
+import numpy as np
