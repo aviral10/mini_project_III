@@ -8,13 +8,40 @@ Home Page
 {% endblock %}
 
 {% block content %}
-<div>
-    <button id="save_butt" onclick="save_img()">Save</button>
-    <button onclick="clear_canvas()">Clear</button>
-</div>
+
+
+    <div class="banner">
+        <h1>MNIST Digit Recognition</h1>
+    </div>
+
+    <div class="middle">
+        <div class="canv_holder" id="canv_pos" style="float:left">
+
+        </div>
+        <div style="width: 60%; float:right" id="right_side">
+<!--            <h1>HOO</h1>-->
+            <button id="save_butt" onclick="save_img()">Save</button>
+            <button onclick="clear_canvas()">Clear</button>
+        </div>
+        <br style="clear:both;"/>
+
+    </div>
+    <div class="bottom" id="display">
+
+        <div class="bot_canv" id="bot_disp">
+
+        </div>
+        <p id="p_tag">Draw a digit</p>
+    </div>
 
 
 <script>
+    $("#save_butt").on('click',function() {
+        $('html, body').animate({
+            'scrollTop' : $("#bot_disp").position().top
+        }, 3000);
+    });
+
     function clear_canvas(){
         reset();
     };
@@ -31,11 +58,7 @@ Home Page
         //console.log(name);
         let name = window.origin;
         name += "/data";
-        /*fetch("http://127.0.0.1:5000/data", {
-            method: "POST",
-            body: entry,
-            cache: "no-cache"
-        })*/
+
 
         fetch(name, {
 
@@ -50,6 +73,9 @@ Home Page
             change(text)
             console.log("Done");
             document.getElementById("save_butt").disabled = false;
+            let pay_load = "Number Recognised: " + text;
+            let p_tag = document.getElementById("p_tag").innerHTML = pay_load;
+
         });
     }
 </script>

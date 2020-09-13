@@ -51,7 +51,7 @@ def create_entry():
         answer = model.predict(final)
         ret_val = answer.argmax()
         print(ret_val)
-        print("NoT Sleeping")
+        # print("NoT Sleeping")
         # time.sleep(2)
         #####
         return str(ret_val)

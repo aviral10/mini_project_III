@@ -2,15 +2,16 @@ var s1 = function( f ) {
 
   f.setup = function() {
     let canvas1 = f.createCanvas(300, 300);
-    canvas1.position(600,100);
-    f.background(240);
+    canvas1.position(10,10, 'relative');
+    f.background(255);
+    canvas1.parent("canv_pos")
   }
   f.mouseDragged = function (){
     f.fill(0);
     f.circle(f.mouseX, f.mouseY, 30);
   }
   reset = function(){
-    f.background(240);
+    f.background(255);
   }
 };
 new p5(s1);
@@ -105,12 +106,14 @@ let input;
 let particles = []
 p.setup = function () {
     let canv = p.createCanvas(600,300);
-    canv.position(100,50)
+    canv.parent("bot_disp")
+//    canv.position(100,50)
     p.background(255);
     input = p.createInput();
-    input.position(425,25);
+//    input.position(425,25);
     input.changed(newText);
-    let points = font.textToPoints('o.O', p.width/2, p.height/2,100);
+//    let points = font.textToPoints('o.O', p.width/2, p.height/2,100);
+    let points = font.textToPoints("Draw", 0, p.height/2+100,200);
     
     for(let i=0;i<points.length;i++){
         let pt = points[i];
@@ -126,7 +129,7 @@ newText = function (){
 let arr;
 change = function (text){
     arr = []
-    let points = font.textToPoints(text, p.width/2, p.height/2,150);
+    let points = font.textToPoints(text, p.width/2-80, p.height/2+100,350);
 
     for(let i=0;i<points.length;i++){
         let pX;
@@ -145,7 +148,7 @@ change = function (text){
 
 
 p.draw = function () {
-    p.background(240);
+    p.background(255);
     for(let i=0;i<particles.length;i++){
         let par = particles[i];
         par.behaviour();
