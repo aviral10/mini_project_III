@@ -72,12 +72,13 @@ Home Page
         name += "/data";
 
 
-        fetch(name, {
+        /*fetch(name, {
 
             method: 'POST',
             body: JSON.stringify(entry)
         }).then(function (response) {
             // At this point, Flask has printed our JSON
+
             return response.text();
         }).then(function (text) {
             console.log('POST response: ');
@@ -87,6 +88,27 @@ Home Page
             document.getElementById("save_butt").disabled = false;
             let pay_load = "Number Recognised: " + text;
             let p_tag = document.getElementById("p_tag").innerHTML = pay_load;
+
+        });*/
+
+
+        fetch(name, {
+
+            method: 'POST',
+            body: JSON.stringify(entry)
+        }).then(function (response) {
+            // At this point, Flask has printed our JSON
+
+            return response.json();
+        }).then(function (json) {
+            console.log('POST response: ');
+            // Should be 'OK' if everything was successful
+            let text = json["number"]
+            change(text)
+            // console.log("Done", json['predictions']);
+            document.getElementById("save_butt").disabled = false;
+            let pay_load = "Number Recognised: " + text;
+            let p_tag = document.getElementById("p_tag").innerHTML = pay_load + "</br>" + json["predictions"];
 
         });
     }

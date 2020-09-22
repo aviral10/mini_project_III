@@ -8,6 +8,7 @@ import numpy as np
 from skimage import data, color, io
 from skimage.transform import rescale, resize
 import matplotlib.pyplot as plt
+import math
 ###
 
 UPLOAD_FOLDER = f'{os.getcwd()}/uploads'
@@ -49,8 +50,7 @@ def create_entry():
 
         model = load_model("models/mnist_trained_99.h5")
         answer = model.predict(final)
-        # vals = [x for x in answer[0]]
-        # print(vals)
+
         ######
         # plt.imshow(final, cmap='gray')
         # plt.savefig('books_read.png')
@@ -58,11 +58,20 @@ def create_entry():
         ######
         ret_val = answer.argmax()
         print(ret_val)
+        vals = [x for x in answer[0]]
+        ll = []
+        try:
+            ll = [round(x*100) for x in answer[0]]
+            print(ll)
+            conf = ll[ret_val]
+            print("Conf: ", conf)
+        except:
+            print("ERROR")
 
-        # print("NoT Sleeping")
-        # time.sleep(2)
         #####
-        return str(ret_val)
+        # return str(ret_val)
+        p = {"number": str(ret_val), "predictions": ll}
+        return jsonify(p)
     else:
         message = {'message':'Had some error'}
         return jsonify(message)
