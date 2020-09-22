@@ -1,3 +1,5 @@
+
+
 var s1 = function( f ) {
 
   f.setup = function() {
@@ -108,12 +110,12 @@ p.setup = function () {
     let canv = p.createCanvas(600,300);
     canv.parent("bot_disp")
 //    canv.position(100,50)
-    p.background(255);
+    p.background(240);
     input = p.createInput();
 //    input.position(425,25);
     input.changed(newText);
 //    let points = font.textToPoints('o.O', p.width/2, p.height/2,100);
-    let points = font.textToPoints("Draw", 0, p.height/2+100,200);
+    let points = font.textToPoints("Draw", 80, p.height/2+100,200);
     
     for(let i=0;i<points.length;i++){
         let pt = points[i];
@@ -129,7 +131,7 @@ newText = function (){
 let arr;
 change = function (text){
     arr = []
-    let points = font.textToPoints(text, p.width/2-80, p.height/2+100,350);
+    let points = font.textToPoints(text, p.width/2-100, p.height/2+100,350);
 
     for(let i=0;i<points.length;i++){
         let pX;
@@ -148,7 +150,7 @@ change = function (text){
 
 
 p.draw = function () {
-    p.background(255);
+    p.background(240);
     for(let i=0;i<particles.length;i++){
         let par = particles[i];
         par.behaviour();
