@@ -111,9 +111,9 @@ p.setup = function () {
     canv.parent("bot_disp")
 //    canv.position(100,50)
     p.background(240);
-    input = p.createInput();
+//    input = p.createInput();
 //    input.position(425,25);
-    input.changed(newText);
+//    input.changed(newText);
 //    let points = font.textToPoints('o.O', p.width/2, p.height/2,100);
     let points = font.textToPoints("Draw", 80, p.height/2+100,200);
     

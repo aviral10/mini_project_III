@@ -7,6 +7,7 @@ from tensorflow.keras.models import load_model
 import numpy as np
 from skimage import data, color, io
 from skimage.transform import rescale, resize
+import matplotlib.pyplot as plt
 ###
 
 UPLOAD_FOLDER = f'{os.getcwd()}/uploads'
@@ -30,27 +31,34 @@ def create_entry():
         # print(req)  # parse as JSON
 
         s = base64.decodebytes(req['data'].encode('utf-8'))
-        with open("image.png", "wb") as w:
+        with open("uploads/image.png", "wb") as w:
             w.write(s)
 
         #####
         ret_val = str("NOPE")
 
-        image = io.imread('image.png')
+        image = io.imread('uploads/image.png')
         image = color.rgb2gray(image)
         image_resized = resize(image, (28, 28, 1))
 
         final = ((1 - np.array(image_resized)))
 
-        # plt.imshow(final, cmap='gray')
-        # plt.savefig('books_read.png')
+
         final = np.expand_dims(final, axis=0)
         print(final.shape)
 
         model = load_model("models/mnist_trained_99.h5")
         answer = model.predict(final)
+        # vals = [x for x in answer[0]]
+        # print(vals)
+        ######
+        # plt.imshow(final, cmap='gray')
+        # plt.savefig('books_read.png')
+
+        ######
         ret_val = answer.argmax()
         print(ret_val)
+
         # print("NoT Sleeping")
         # time.sleep(2)
         #####
