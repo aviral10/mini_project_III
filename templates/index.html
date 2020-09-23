@@ -42,6 +42,9 @@ Home Page
         </div>
         <p id="p_tag">Draw a digit</p>
     </div>
+    <div class="sub_bottom">
+        <img id="graph" src="{{ url_for('static', filename='base_plot.png') }}" alt="graph">
+    </div>
     <div class="foot">
         <h3>&#169 Created by Aviral</h3>
     </div>
@@ -89,6 +92,7 @@ Home Page
             let pay_load = "Number Recognised: " + text;
             let p_tag = document.getElementById("p_tag").innerHTML = pay_load;
 
+
         });*/
 
 
@@ -101,7 +105,7 @@ Home Page
 
             return response.json();
         }).then(function (json) {
-            console.log('POST response: ');
+            console.log('POST response: Success');
             // Should be 'OK' if everything was successful
             let text = json["number"]
             change(text)
@@ -109,7 +113,9 @@ Home Page
             document.getElementById("save_butt").disabled = false;
             let pay_load = "Number Recognised: " + text;
             let p_tag = document.getElementById("p_tag").innerHTML = pay_load + "</br>" + json["predictions"];
-
+            let filen = "/" + json["link"]
+            console.log(filen)
+            let graph = document.getElementById("graph").src = "{{ url_for('static', filename="upload" )}}" + filen;
         });
     }
 </script>
