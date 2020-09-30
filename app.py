@@ -21,8 +21,11 @@ app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 def upload_file():
     return render_template("index.html")
 
+
 nseed = 10
 tot_items = len(os.listdir(UPLOAD_FOLDER))
+
+
 @app.route('/data', methods=['POST'])
 def create_entry():
     global nseed, tot_items
@@ -50,8 +53,7 @@ def create_entry():
         image = color.rgb2gray(image)
         image_resized = resize(image, (28, 28, 1))
 
-        final = ((1 - np.array(image_resized)))
-
+        final = 1 - np.array(image_resized)
 
         final = np.expand_dims(final, axis=0)
         print(final.shape)
@@ -59,11 +61,6 @@ def create_entry():
         model = load_model("models/mnist_trained_99.h5")
         answer = model.predict(final)
 
-        ######
-        # plt.imshow(final, cmap='gray')
-        # plt.savefig('books_read.png')
-
-        ######
         ret_val = answer.argmax()
         print(ret_val)
         ll = []
@@ -97,11 +94,13 @@ def savePlot(ll, name):
     fig.patch.set_facecolor((240/255, 240/255, 240/255))
     ax.set_facecolor((240/255, 240/255, 240/255))
     xlocs = [i for i in range(10)]
+    plt.ylim(0, 100)
     for i, v in enumerate(ll):
         if int(v) != 0:
             plt.text(xlocs[i]-0.20, v + 0.3, str(v)+"%")
     fig.savefig(f'static/upload/{name}')  # save the figure to file
     plt.close(fig)
+
 
 if __name__ == '__main__':
     app.run(debug=True)

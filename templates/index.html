@@ -21,13 +21,16 @@ Home Page
         <div style="width: 60%; float:right" id="right_side">
 
             <div class="data_up">
-                <h1>HOOOOOO</h1>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquam consequuntur deserunt id libero necessitatibus, nihil recusandae! Accusamus, accusantium beatae cupiditate debitis delectus facere, illum incidunt libero nostrum quam quibusdam, voluptates?</p>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusantium dolore, dolores eaque eos eveniet ipsum, libero nihil nobis nostrum odio odit qui quisquam sed unde veniam! Alias obcaecati quas voluptate.</p>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusantium dolore, dolores eaque eos eveniet ipsum, libero nihil nobis nostrum odio odit qui quisquam sed unde veniam! Alias obcaecati quas voluptate.</p>
+                <h1>Instructions: </h1>
+                <ul>
+                  <li>Slowly draw a digit between 0-9 on the canvas.</li>
+                  <li>When you are done with the drawing click on Recognise.</li>
+                  <li>The page will scroll down and predict what the drawn digit could be.</li>
+                </ul>
+                <p>Click on clear to clear out the canvas and try another digit.</p>
             </div>
             <div class="data_down">
-                <button class="big-button" id="save_butt" onclick="save_img()">Save</button>
+                <button class="big-button" id="save_butt" onclick="save_img()">Recognise</button>
                 <button class="" onclick="clear_canvas()">Clear</button>
             </div>
 
@@ -70,30 +73,9 @@ Home Page
         let entry = {
             "data" : dataURL
         };
-        //console.log(name);
+
         let name = window.origin;
         name += "/data";
-
-
-        /*fetch(name, {
-
-            method: 'POST',
-            body: JSON.stringify(entry)
-        }).then(function (response) {
-            // At this point, Flask has printed our JSON
-
-            return response.text();
-        }).then(function (text) {
-            console.log('POST response: ');
-            // Should be 'OK' if everything was successful
-            change(text)
-            console.log("Done");
-            document.getElementById("save_butt").disabled = false;
-            let pay_load = "Number Recognised: " + text;
-            let p_tag = document.getElementById("p_tag").innerHTML = pay_load;
-
-
-        });*/
 
 
         fetch(name, {
@@ -104,17 +86,18 @@ Home Page
             // At this point, Flask has printed our JSON
 
             return response.json();
+
         }).then(function (json) {
             console.log('POST response: Success');
-            // Should be 'OK' if everything was successful
+
             let text = json["number"]
             change(text)
-            // console.log("Done", json['predictions']);
+
             document.getElementById("save_butt").disabled = false;
             let pay_load = "Number Recognised: " + text;
             let p_tag = document.getElementById("p_tag").innerHTML = pay_load + "</br>" + json["predictions"];
             let filen = "/" + json["link"]
-            console.log(filen)
+
             let graph = document.getElementById("graph").src = "{{ url_for('static', filename="upload" )}}" + filen;
         });
     }
