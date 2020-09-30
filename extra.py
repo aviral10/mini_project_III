@@ -15,4 +15,4 @@ def savePlot(ll):
             plt.text(xlocs[i] - 0.20, v + 0.3, str(v) + "%")
     plt.show()
 
-savePlot([0,0,37,0,0,0,0,63,0,0])
+savePlot([0,0,100,0,0,0,0,0,0,0])

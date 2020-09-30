@@ -94,7 +94,7 @@ def savePlot(ll, name):
     fig.patch.set_facecolor((240/255, 240/255, 240/255))
     ax.set_facecolor((240/255, 240/255, 240/255))
     xlocs = [i for i in range(10)]
-    plt.ylim(0, 100)
+    plt.ylim(0, 109)
     for i, v in enumerate(ll):
         if int(v) != 0:
             plt.text(xlocs[i]-0.20, v + 0.3, str(v)+"%")
