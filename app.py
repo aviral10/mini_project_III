@@ -8,8 +8,6 @@ from skimage.transform import resize
 
 
 
-# Setting up the uploads folder
-UPLOAD_FOLDER = f'{os.getcwd()}/static/upload'
 
 
 # App Setup
@@ -22,9 +20,6 @@ app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 def upload_file():
     return render_template("index.html")
 
-# Keeping track of the uploaded files in the uploads folder
-nseed = 10
-tot_items = len(os.listdir(UPLOAD_FOLDER))
 
 
 @app.route('/data', methods=['POST'])
@@ -32,16 +27,6 @@ def create_entry():
     global nseed, tot_items
 
     # POST request
-    tot_items = len(os.listdir(UPLOAD_FOLDER))
-
-    print("tot_items: ", tot_items) # logging total files inside uploads folder
-
-    if tot_items >= 3:  # deleting everything if the number of files is greater than 3
-        tot_items = 0
-        nseed = 10
-        items_inside = os.listdir(UPLOAD_FOLDER)
-        for ele in items_inside:
-            os.remove(UPLOAD_FOLDER + "/" + ele)
 
     if request.method == 'POST':
         req = request.get_json(force=True)
