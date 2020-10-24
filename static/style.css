@@ -5,6 +5,10 @@ body {
     font-family: 'Noto Sans JP', sans-serif;
     background: rgb(240,240,240);
 }
+.graph{
+    margin: auto;
+}
+
 
 .foot {
 	text-align: center;

@@ -46,15 +46,64 @@ Home
         <p id="p_tag">Draw a digit</p>
     </div>
     <div class="sub_bottom">
-        <img id="graph" src="{{ url_for('static', filename='base_plot.png') }}" alt="graph">
+        <canvas id="myChart" class="graph" width="700" height="500"></canvas>
     </div>
     <div class="foot">
         <p>Github repo: <a href="https://github.com/aviral10/mini_project_III">https://github.com/aviral10/mini_project_III</a></p>
         <h3>&#169 Created by Aviral</h3>
     </div>
 
-
 <script>
+        var ctx = document.getElementById('myChart').getContext('2d');
+        Chart.defaults.global.defaultFontSize = 15;
+        var myChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: ['0','1','2','3','4','5','6','7','8','9'],
+                datasets: [{
+                    label: 'Confidence %',
+                    data: [0,0,0,0,0,0,0,0,0,0],
+                    backgroundColor: [
+                        'rgba(255, 99, 132, 0.2)',
+                        'rgba(54, 162, 235, 0.2)',
+                        'rgba(255, 206, 86, 0.2)',
+                        'rgba(75, 192, 192, 0.2)',
+                        'rgba(153, 102, 255, 0.2)',
+                        'rgba(255, 159, 64, 0.2)'
+                    ],
+                    borderColor: [
+                        'rgba(255, 99, 132, 1)',
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(255, 206, 86, 1)',
+                        'rgba(75, 192, 192, 1)',
+                        'rgba(153, 102, 255, 1)',
+                        'rgba(255, 159, 64, 1)'
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: false,
+                scales: {
+                    yAxes: [{
+                      scaleLabel: {
+                        display: true,
+                        labelString: 'Confidence plot for the predictions'
+
+
+                      }
+                    }],
+                    xAxes: [{
+                      scaleLabel: {
+                        display: true,
+                        labelString: 'Digits'
+                      }
+                    }]
+                  },
+
+            }
+        });
+
     $("#save_butt").on('click',function() {
         $('html, body').animate({
             'scrollTop' : $("#bot_disp").position().top
@@ -97,9 +146,8 @@ Home
             document.getElementById("save_butt").disabled = false;
             let pay_load = "Number recognised: " + text;
             let p_tag = document.getElementById("p_tag").innerHTML = pay_load + "</br>";
-            let filen = "/" + json["link"]
-
-            let graph = document.getElementById("graph").src = "{{ url_for('static', filename="upload" )}}" + filen;
+            myChart.data.datasets[0].data = json['predictions']
+            myChart.update()
         });
     }
 </script>

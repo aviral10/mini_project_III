@@ -5,9 +5,7 @@ from tensorflow.keras.models import load_model
 import numpy as np
 from skimage import color, io
 from skimage.transform import resize
-import matplotlib
-matplotlib.use('Agg')
-import matplotlib.pyplot as plt
+
 
 
 # Setting up the uploads folder
@@ -78,7 +76,6 @@ def create_entry():
             name = str(nseed)+ ".png"
             nseed+=1
             predictions_list = [round(x*100, 2) for x in answer[0]]
-            savePlot(predictions_list, name)
             print(predictions_list)
             conf = predictions_list[ret_val]
             print("Conf: ", conf)   # Log confidence list
@@ -93,24 +90,6 @@ def create_entry():
         return jsonify(message)
 
 
-def savePlot(ll, name):
-    """
-    Save the Confidence plot for the predictions
-    """
-    fig, ax = plt.subplots(nrows=1, ncols=1)  # create figure & 1 axis
-    ax.bar([str(x) for x in range(10)], ll, color="#ff660d")
-    plt.xlabel('Digits')
-    plt.ylabel('Confidence in %')
-    plt.title('Confidence Plot for the prediction')
-    fig.patch.set_facecolor((240/255, 240/255, 240/255))
-    ax.set_facecolor((240/255, 240/255, 240/255))
-    xlocs = [i for i in range(10)]
-    plt.ylim(0, 109)
-    for i, v in enumerate(ll):
-        if int(v) != 0:
-            plt.text(xlocs[i]-0.20, v + 0.3, str(v)+"%")
-    fig.savefig(f'static/upload/{name}')  # save the figure to file
-    plt.close(fig)
 
 
 if __name__ == '__main__':
