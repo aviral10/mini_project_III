@@ -109,12 +109,9 @@ let particles = []
 p.setup = function () {
     let canv = p.createCanvas(600,300);
     canv.parent("bot_disp")
-//    canv.position(100,50)
+
     p.background(240);
-//    input = p.createInput();
-//    input.position(425,25);
-//    input.changed(newText);
-//    let points = font.textToPoints('o.O', p.width/2, p.height/2,100);
+
     let points = font.textToPoints("Draw", 80, p.height/2+100,200);
     
     for(let i=0;i<points.length;i++){
