@@ -6,10 +6,6 @@ import numpy as np
 from skimage import color, io
 from skimage.transform import resize
 
-
-
-
-
 # App Setup
 app = Flask(__name__)
 
@@ -18,7 +14,6 @@ app = Flask(__name__)
 @app.route('/', methods=['GET', 'POST'])
 def upload_file():
     return render_template("index.html")
-
 
 
 @app.route('/data', methods=['POST'])
@@ -57,8 +52,6 @@ def create_entry():
         predictions_list = []
         name = ""
         try:
-            name = str(nseed)+ ".png"
-            nseed+=1
             predictions_list = [round(x*100, 2) for x in answer[0]]
             print(predictions_list)
             conf = predictions_list[ret_val]
@@ -72,8 +65,6 @@ def create_entry():
     else:
         message = {'message':'Had some error'}
         return jsonify(message)
-
-
 
 
 if __name__ == '__main__':
