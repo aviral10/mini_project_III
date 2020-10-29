@@ -1,151 +1,159 @@
 {% extends 'base.html' %}
 {% block title %}
+
 Home
+
 {% endblock %}
 {% block script %}
+
 <script src="{{url_for('static', filename='sketch.js')}}"></script>
 <script src="{{url_for('static', filename='particle.js')}}"></script>
+
 {% endblock %}
 
 {% block content %}
+<div class="banner">
+    <h1>MNIST Digit Recognition</h1>
+</div>
 
-    <div class="banner">
-        <h1>MNIST Digit Recognition</h1>
+<div class="middle">
+    <div class="canv_holder" id="canv_pos" style="float:left">
+
     </div>
+    <div style="width: 60%; float:right" id="right_side">
 
-    <div class="middle">
-        <div class="canv_holder" id="canv_pos" style="float:left">
-
+        <div class="data_up">
+            <h1>Instructions: </h1>
+            <ul>
+              <li>Slowly draw a digit between 0-9 on the canvas (Left).</li>
+              <li>When you are done with the drawing click on Recognise.</li>
+              <li>The page will scroll down and predict what the drawn digit could be.</li>
+            </ul>
+            <p>Click on clear to clear out the canvas and try another digit.</p>
         </div>
-        <div style="width: 60%; float:right" id="right_side">
 
-            <div class="data_up">
-                <h1>Instructions: </h1>
-                <ul>
-                  <li>Slowly draw a digit between 0-9 on the canvas.</li>
-                  <li>When you are done with the drawing click on Recognise.</li>
-                  <li>The page will scroll down and predict what the drawn digit could be.</li>
-                </ul>
-                <p>Click on clear to clear out the canvas and try another digit.</p>
-
-            </div>
-            <div class="data_down">
-                <button class="button button1" id="save_butt" onclick="save_img()">Recognise</button>
-                <button class="button button2" onclick="clear_canvas()">Clear</button>
-            </div>
-
+        <div class="data_down">
+            <button class="button button1" id="save_butt" onclick="save_img()">Recognise</button>
+            <button class="button button2" onclick="clear_canvas()">Clear</button>
         </div>
-        <br style="clear:both;"/>
+    </div>
+    <br style="clear:both;"/>
+</div>
+
+<div class="bottom" id="display">
+    <div class="bot_canv" id="bot_disp">
 
     </div>
-    <div class="bottom" id="display">
+    <p id="p_tag">Draw a digit on the Canvas first</p>
+</div>
 
-        <div class="bot_canv" id="bot_disp">
+<div class="sub_bottom">
+    <canvas id="myChart" class="graph" width="700" height="500"></canvas>
+</div>
 
-        </div>
-        <p id="p_tag">Draw a digit</p>
-    </div>
-    <div class="sub_bottom">
-        <canvas id="myChart" class="graph" width="700" height="500"></canvas>
-    </div>
-    <div class="foot">
-        <p>Github repo: <a href="https://github.com/aviral10/mini_project_III">https://github.com/aviral10/mini_project_III</a></p>
-        <h3>&#169 Created by Aviral</h3>
-    </div>
+<div class="foot">
+    <p>Github repo: <a href="https://github.com/aviral10/mini_project_III">https://github.com/aviral10/mini_project_III</a></p>
+    <h3>&#169 Created by Aviral</h3>
+</div>
+
+
 
 <script>
-        var ctx = document.getElementById('myChart').getContext('2d');
-        Chart.defaults.global.defaultFontSize = 15;
-        var myChart = new Chart(ctx, {
-            type: 'bar',
-            data: {
-                labels: ['0','1','2','3','4','5','6','7','8','9'],
-                datasets: [{
-                    label: 'Confidence %',
-                    data: [0,0,0,0,0,0,0,0,0,0],
-                    backgroundColor: [
-                        'rgba(255, 99, 132, 0.2)',
-                        'rgba(54, 162, 235, 0.2)',
-                        'rgba(255, 206, 86, 0.2)',
-                        'rgba(75, 192, 192, 0.2)',
-                        'rgba(153, 102, 255, 0.2)',
-                        'rgba(255, 159, 64, 0.2)'
-                    ],
-                    borderColor: [
-                        'rgba(255, 99, 132, 1)',
-                        'rgba(54, 162, 235, 1)',
-                        'rgba(255, 206, 86, 1)',
-                        'rgba(75, 192, 192, 1)',
-                        'rgba(153, 102, 255, 1)',
-                        'rgba(255, 159, 64, 1)'
-                    ],
-                    borderWidth: 1
+    var ctx = document.getElementById('myChart').getContext('2d');
+    Chart.defaults.global.defaultFontSize = 15;
+    var myChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: ['0','1','2','3','4','5','6','7','8','9'],
+            datasets: [{
+                label: 'Confidence %',
+                data: [0,0,0,0,0,0,0,0,0,0],
+                backgroundColor: [
+                    'rgba(255, 99, 132, 0.2)',
+                    'rgba(54, 162, 235, 0.2)',
+                    'rgba(255, 206, 86, 0.2)',
+                    'rgba(75, 192, 192, 0.2)',
+                    'rgba(153, 102, 255, 0.2)',
+                    'rgba(255, 159, 64, 0.2)'
+                ],
+                borderColor: [
+                    'rgba(255, 99, 132, 1)',
+                    'rgba(54, 162, 235, 1)',
+                    'rgba(255, 206, 86, 1)',
+                    'rgba(75, 192, 192, 1)',
+                    'rgba(153, 102, 255, 1)',
+                    'rgba(255, 159, 64, 1)'
+                ],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            responsive: false,
+            scales: {
+                yAxes: [{
+                  scaleLabel: {
+                    display: true,
+                    labelString: 'Confidence plot for the predictions'
+
+
+                  }
+                }],
+                xAxes: [{
+                  scaleLabel: {
+                    display: true,
+                    labelString: 'Digits'
+                  }
                 }]
-            },
-            options: {
-                responsive: false,
-                scales: {
-                    yAxes: [{
-                      scaleLabel: {
-                        display: true,
-                        labelString: 'Confidence plot for the predictions'
+              },
 
+        }
+    });
 
-                      }
-                    }],
-                    xAxes: [{
-                      scaleLabel: {
-                        display: true,
-                        labelString: 'Digits'
-                      }
-                    }]
-                  },
-
-            }
-        });
-
+    // Scroll to the results
     $("#save_butt").on('click',function() {
         $('html, body').animate({
             'scrollTop' : $("#bot_disp").position().top
         }, 3000);
     });
 
+    // Clear the Canvas
     function clear_canvas(){
         reset();
     };
 
+    // Save the drawn digit
     function save_img(){
         let canvas = document.getElementById("defaultCanvas0")
         document.getElementById("save_butt").disabled = true;
         let dataURL = canvas.toDataURL("image/png");
-        dataURL = dataURL.replace(/^data:image\/(png|jpg);base64,/, "");
+        dataURL = dataURL.replace(/^data:image\/(png|jpg);base64,/, "");    // Grab the base64 encoded data URL
 
         let entry = {
             "data" : dataURL
         };
 
-        let name = window.origin;
+        let name = window.origin;   // Main address of the current page
         name += "/data";
 
-
+        // Transferring data/image to Flask
         fetch(name, {
-
             method: 'POST',
             body: JSON.stringify(entry)
         }).then(function (response) {
-
             // At this point, Flask has printed our JSON
             return response.json();
-
         }).then(function (json) {
-            console.log('POST response: Success');
 
+            // This is the response of the Flask App, with our predicted Digit
+            console.log('POST response: Success');
             let text = json["number"]
-            change(text)
+            change(text)    // Number animation
 
             document.getElementById("save_butt").disabled = false;
             let pay_load = "Number recognised: " + text;
             let p_tag = document.getElementById("p_tag").innerHTML = pay_load + "</br>";
+
+            // Updating the chart
             myChart.data.datasets[0].data = json['predictions']
             myChart.update()
         });

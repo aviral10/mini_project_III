@@ -28,22 +28,7 @@ body {
     color: Black;
     text-align: center;
 }
-/*
-.banner-text {
-  background-color: rgb(0,0,0); /* Fallback color */
-  background-color: rgba(0,0,0, 0.4); /* Black w/opacity/see-through */
-  color: white;
-  font-weight: bold;
-  border: 3px solid #f1f1f1;
-  position: absolute;
-  //top: 50%;
-  //left: 50%;
-  //transform: translate(-50%, -50%);
-  width: 80%;
-  padding: 20px;
-  text-align: center;
-}
-*/
+
 
 .middle {
   width: 100%;
@@ -75,12 +60,6 @@ body {
 	height: 500px;
 	text-align: center;
 }
-/*
-.sub_bottom img{
-    //width: 50%;
-    //height: 500px;
-}*/
-
 
 .bot_canv{
   //padding: auto;

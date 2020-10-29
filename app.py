@@ -1,4 +1,3 @@
-import os
 from flask import Flask, request, render_template, jsonify
 import base64
 from tensorflow.keras.models import load_model
@@ -9,7 +8,6 @@ from skimage.transform import resize
 # App Setup
 app = Flask(__name__)
 
-
 # Home Page
 @app.route('/', methods=['GET', 'POST'])
 def upload_file():
@@ -18,8 +16,6 @@ def upload_file():
 
 @app.route('/data', methods=['POST'])
 def create_entry():
-    global nseed, tot_items
-
     # POST request
 
     if request.method == 'POST':
@@ -55,17 +51,18 @@ def create_entry():
             predictions_list = [round(x*100, 2) for x in answer[0]]
             print(predictions_list)
             conf = predictions_list[ret_val]
-            print("Conf: ", conf)   # Log confidence list
+            print("Confidence: ", conf)   # Log confidence list
         except:
             print("ERROR")
 
-        # Send data to javascript to display accordingly
+        # Send data to javascript to display data accordingly
         p = {"number": str(ret_val), "predictions": predictions_list, "link": name}
         return jsonify(p)
     else:
-        message = {'message':'Had some error'}
+        message = {'message': 'Had some error'}     # handling error cases
         return jsonify(message)
 
 
+# Run the app
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run()

@@ -1,5 +1,3 @@
-
-
 var s1 = function( f ) {
 
   f.setup = function() {
@@ -100,62 +98,62 @@ class Particle{
 
 }
 
-let font;
-p.preload = function (){
-    font = p.loadFont("/static/Handlee-Regular.ttf")
-}
-let input;
-let particles = []
-p.setup = function () {
-    let canv = p.createCanvas(600,300);
-    canv.parent("bot_disp")
-
-    p.background(240);
-
-    let points = font.textToPoints("Draw", 80, p.height/2+100,200);
-    
-    for(let i=0;i<points.length;i++){
-        let pt = points[i];
-        let particle = new Particle(pt.x, pt.y)
-        particles.push(particle);        
+    let font;
+    p.preload = function (){
+        font = p.loadFont("/static/Handlee-Regular.ttf")
     }
-}
-newText = function (){
-    change(input.value());
-    // console.log();
-}
+    let input;
+    let particles = []
+    p.setup = function () {
+        let canv = p.createCanvas(600,300);
+        canv.parent("bot_disp")
 
-let arr;
-change = function (text){
-    arr = []
-    let points = font.textToPoints(text, p.width/2-100, p.height/2+100,350);
+        p.background(240);
 
-    for(let i=0;i<points.length;i++){
-        let pX;
-        if(i<particles.length){
-            pX = particles[i];
-        }else{
-            pX = new Particle(particles[0].pos.x, particles[0].pos.y);
+        let points = font.textToPoints("Draw", 80, p.height/2+100,200);
+
+        for(let i=0;i<points.length;i++){
+            let pt = points[i];
+            let particle = new Particle(pt.x, pt.y)
+            particles.push(particle);
         }
-        let ch = points[i];
-        pX.target = p.createVector(ch.x, ch.y);
-        arr.push(pX) 
     }
-    particles = arr;
-}
-
-
-
-p.draw = function () {
-    p.background(240);
-    for(let i=0;i<particles.length;i++){
-        let par = particles[i];
-        par.behaviour();
-        par.update();
-        par.show();
-            
+    newText = function (){
+        change(input.value());
+        // console.log();
     }
-}
+
+    let arr;
+    change = function (text){
+        arr = []
+        let points = font.textToPoints(text, p.width/2-100, p.height/2+100,350);
+
+        for(let i=0;i<points.length;i++){
+            let pX;
+            if(i<particles.length){
+                pX = particles[i];
+            }else{
+                pX = new Particle(particles[0].pos.x, particles[0].pos.y);
+            }
+            let ch = points[i];
+            pX.target = p.createVector(ch.x, ch.y);
+            arr.push(pX)
+        }
+        particles = arr;
+    }
+
+
+
+    p.draw = function () {
+        p.background(240);
+        for(let i=0;i<particles.length;i++){
+            let par = particles[i];
+            par.behaviour();
+            par.update();
+            par.show();
+
+        }
+    }
 };
 
 
