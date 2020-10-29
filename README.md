@@ -31,7 +31,7 @@
  - Replace ENV_NAME with any name you like, once this finishes do: 
    `conda activate ENV_NAME` 
    
- - Installing pip is optional, but pip seems to install the correct variant of tensorflow that this project requires so I would recommend using pip instead 
+ - Installing pip is optional, but pip seems to install the correct variant of tensorflow that this project requires so I would recommend using pip.  
 `conda install pip`  
 
  - Once inside the fully set up virtual environment, navigate to the project directory and run the following command:  
