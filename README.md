@@ -5,7 +5,7 @@
  - Using the model to predict custom drawn digits
 
 ### The GUI version of this project has been hosted online at:
-​	https://www.mnistdigitrecognition.herokuapp.com 
+​	https://mnistdigitrecognition.herokuapp.com 
 
 > Note: The website has been hosted on a free server, so it might take around 1-2 minutes to load up
 > completely when you open it the first time. Please have patience until it loads up and refresh it once after its done  
