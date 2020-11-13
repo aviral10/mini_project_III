@@ -4,6 +4,7 @@ var s1 = function( f ) {
     let canvas1 = f.createCanvas(300, 300);
     canvas1.position(10,10, 'relative');
     f.background(255);
+    f.frameRate(60);
     canvas1.parent("canv_pos")
   }
   f.mouseDragged = function (){
